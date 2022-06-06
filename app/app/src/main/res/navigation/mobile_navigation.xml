@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="de.oliver.bierdb.ui.home.HomeFragment"
-        android:label="Menu home"
+        android:label="BierDB"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_nav_home_to_suchenFragment"
@@ -19,33 +19,29 @@
         <action
             android:id="@+id/action_nav_home_to_beitragenFragment"
             app:destination="@id/beitragenFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_profilFragment"
+            app:destination="@id/profilFragment" />
     </fragment>
     <fragment
         android:id="@+id/suchenFragment"
         android:name="de.oliver.bierdb.ui.suchen.SuchenFragment"
-        android:label="fragment_suchen"
-        tools:layout="@layout/fragment_suchen" >
-        <action
-            android:id="@+id/action_suchenFragment_to_nav_home"
-            app:destination="@id/nav_home" />
-    </fragment>
+        android:label="Suchen"
+        tools:layout="@layout/fragment_suchen" />
     <fragment
         android:id="@+id/promillerechnerFragment"
         android:name="de.oliver.bierdb.ui.promillerechner.PromillerechnerFragment"
-        android:label="fragment_promillerechner"
-        tools:layout="@layout/fragment_promillerechner" >
-        <action
-            android:id="@+id/action_promillerechnerFragment_to_nav_home"
-            app:destination="@id/nav_home" />
-    </fragment>
+        android:label="Promillerechner"
+        tools:layout="@layout/fragment_promillerechner" />
     <fragment
         android:id="@+id/beitragenFragment"
         android:name="de.oliver.bierdb.ui.beitragen.BeitragenFragment"
-        android:label="fragment_beitragen"
-        tools:layout="@layout/fragment_beitragen" >
-        <action
-            android:id="@+id/action_beitragenFragment_to_nav_home"
-            app:destination="@id/nav_home" />
-    </fragment>
+        android:label="Beitragen"
+        tools:layout="@layout/fragment_beitragen" />
+    <fragment
+        android:id="@+id/profilFragment"
+        android:name="de.oliver.bierdb.ui.profil.ProfilFragment"
+        android:label="Profil"
+        tools:layout="@layout/fragment_profil" />
 
 </navigation>

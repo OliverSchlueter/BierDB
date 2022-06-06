@@ -16,7 +16,7 @@
         app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
     <ScrollView
-        android:layout_width="411dp"
+        android:layout_width="match_parent"
         android:layout_height="656dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"

@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private NavigationView navigationView;
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +48,9 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_home, R.id.nav_suchen, R.id.nav_promillerechner, R.id.nav_beitragen)
                 .setOpenableLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
-
-        getSupportActionBar().setTitle("BierDB");
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -63,23 +61,19 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.nav_home:
                         navController.navigate(R.id.nav_home);
-                        getSupportActionBar().setTitle("BierDB");
                         //Snackbar.make(navigationView, "Home", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                         break;
                     case R.id.nav_suchen:
                         //Snackbar.make(navigationView, "Suchen", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                         navController.navigate(R.id.suchenFragment);
-                        getSupportActionBar().setTitle("Suchen");
                         break;
                     case R.id.nav_promillerechner:
                         //Snackbar.make(navigationView, "Promillerechner", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                         navController.navigate(R.id.promillerechnerFragment);
-                        getSupportActionBar().setTitle("Promillerechner");
                         break;
                     case R.id.nav_beitragen:
                         //Snackbar.make(navigationView, "Beitragen", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                         navController.navigate(R.id.beitragenFragment);
-                        getSupportActionBar().setTitle("Beitragen");
                         break;
                 }
 
@@ -111,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(navigationView, "Einstellungen", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 return true;
             case R.id.action_profil:
-                Snackbar.make(navigationView, "Profil", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                //Snackbar.make(navigationView, "Profil", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                navController.navigate(R.id.profilFragment);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
