@@ -16,7 +16,6 @@ import de.oliver.bierdb.R;
 
 public class SuchenFragment extends Fragment {
 
-    private SuchenViewModel mViewModel;
 
     public static SuchenFragment newInstance() {
         return new SuchenFragment();
@@ -28,11 +27,5 @@ public class SuchenFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_suchen, container, false);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(SuchenViewModel.class);
-        // TODO: Use the ViewModel
-    }
 
 }

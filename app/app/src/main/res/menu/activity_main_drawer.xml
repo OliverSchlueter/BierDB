@@ -6,15 +6,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
+            android:icon="@drawable/ic_baseline_home_24"
             android:title="Home" />
         <item
             android:id="@+id/nav_suchen"
+            android:icon="@drawable/ic_baseline_search_24"
             android:title="Suchen" />
         <item
             android:id="@+id/nav_promillerechner"
+            android:icon="@drawable/ic_baseline_calculate_24"
             android:title="Promillerechner" />
         <item
             android:id="@+id/nav_beitragen"
+            android:icon="@drawable/ic_baseline_add_to_photos_24"
             android:title="Beitragen" />
     </group>
 </menu>
