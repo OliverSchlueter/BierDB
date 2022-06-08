@@ -62,6 +62,12 @@ public class SuchenFragment extends Fragment {
         list_bier_suggestion = view.findViewById(R.id.list_bier_suggestion);
         txt_amount_suggestions = view.findViewById(R.id.txt_amount_suggestions);
 
+        TextView info = new TextView(MainActivity.getInstance());
+        info.setText("Vorschläge basierend auf deinem Suchverlauf");
+        info.setTextSize(15);
+        info.setTextColor(getResources().getColor(R.color.gray));
+        list_bier_suggestion.addView(info);
+
         SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
         for (String s : sharedPreferences.getStringSet("searchHistory", new HashSet<>())) {
             int id = Integer.parseInt(s);
@@ -73,10 +79,9 @@ public class SuchenFragment extends Fragment {
 
         search_bier.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
-            @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n", "ResourceAsColor", "MutatingSharedPrefs"})
+            @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n", "ResourceAsColor", "MutatingSharedPrefs", "ResourceType"})
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(view.getContext(), "Search: " + query, Toast.LENGTH_SHORT).show();
                 list_bier_suggestion.removeAllViews();
                 List<Drink> suggestedDrinks = new ArrayList<>();
 
@@ -94,7 +99,11 @@ public class SuchenFragment extends Fragment {
                     }
                 }
 
-                txt_amount_suggestions.setText(suggestedDrinks.size() + " BIER" + (suggestedDrinks.size() > 1 ? "E" : "") + " GEFUNDEN!");
+                if(suggestedDrinks.size() == 0){
+                    txt_amount_suggestions.setText("KEINE TREFFER GEFUNDE");
+                } else {
+                    txt_amount_suggestions.setText(suggestedDrinks.size() + " BIER" + (suggestedDrinks.size() > 1 ? "E" : "") + " GEFUNDEN");
+                }
 
 
                 for (int i = 0; i < suggestedDrinks.size(); i++) {
@@ -110,9 +119,39 @@ public class SuchenFragment extends Fragment {
                         if (!currentHistory.contains(drink.getId() + "")) {
                             currentHistory.add(drink.getId() + "");
                             sharedPreferences.edit().putStringSet("searchHistory", currentHistory).commit();
-                            Toast.makeText(MainActivity.getInstance(), "Added: " + drink.getName() + " to search history", Toast.LENGTH_SHORT).show();
                         }
                     }
+                }
+
+                Set<String> currentHistory = new HashSet<>();
+                currentHistory.addAll(sharedPreferences.getStringSet("searchHistory", new HashSet<>()));
+                if(suggestedDrinks.size() < 10 && currentHistory.size() > 0){
+                    View divider = new View(MainActivity.getInstance());
+                    divider.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 20));
+
+                    TextView info = new TextView(MainActivity.getInstance());
+                    info.setText("Vorschläge basierend auf deinem Suchverlauf");
+                    info.setTextSize(15);
+                    info.setTextColor(getResources().getColor(R.color.gray));
+
+                    View divider2 = new View(MainActivity.getInstance());
+                    divider2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 20));
+
+                    list_bier_suggestion.addView(divider);
+                    list_bier_suggestion.addView(info);
+                    list_bier_suggestion.addView(divider2);
+
+                    for (int i = 0; i < currentHistory.size(); i++) {
+                        if(i > 10){
+                            break;
+                        }
+
+                        Drink d = Drink.getDrink(Integer.parseInt(currentHistory.toArray()[i].toString()));
+                        if(d != null && !suggestedDrinks.contains(d)){
+                            generateViewFromDrink(d);
+                        }
+                    }
+
                 }
 
                 return false;
@@ -120,6 +159,7 @@ public class SuchenFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+
                 return false;
             }
         });
@@ -130,7 +170,7 @@ public class SuchenFragment extends Fragment {
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
         linearLayout.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
         linearLayout.setOnClickListener(v -> {
-            Toast.makeText(MainActivity.getInstance(), "Click on: " + drink.getName(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.getInstance(), "Click on: " + drink.getName() + "(" + drink.getId() + ")", Toast.LENGTH_SHORT).show();
         });
 
         ImageView icon = new ImageView(MainActivity.getInstance());

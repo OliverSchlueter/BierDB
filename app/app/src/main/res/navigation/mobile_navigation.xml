@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_nav_home_to_profilFragment"
             app:destination="@id/profilFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_einstellungenFragment"
+            app:destination="@id/einstellungenFragment" />
     </fragment>
     <fragment
         android:id="@+id/suchenFragment"
@@ -43,5 +46,10 @@
         android:name="de.oliver.bierdb.ui.profil.ProfilFragment"
         android:label="Profil"
         tools:layout="@layout/fragment_profil" />
+    <fragment
+        android:id="@+id/einstellungenFragment"
+        android:name="de.oliver.bierdb.ui.einstellungen.EinstellungenFragment"
+        android:label="Einstellungen"
+        tools:layout="@layout/fragment_einstellungen" />
 
 </navigation>
