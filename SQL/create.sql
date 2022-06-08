@@ -1,14 +1,15 @@
 CREATE DATABASE IF NOT EXISTS BierDB;
 USE BierDB;
 
-DROP TABLE IF EXISTS drink;
+DROP TABLE IF EXISTS `drink`;
 DROP TABLE IF EXISTS `type`;
+DROP TABLE IF EXISTS `contribution`;
+DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `type`(
     `type_id` INT AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(255)
 );
-
 
 CREATE TABLE `drink`(
     `drink_id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -18,4 +19,21 @@ CREATE TABLE `drink`(
     `size_liter` DECIMAL(10,2),
 
     FOREIGN KEY (type_id) REFERENCES `type`(type_id)
+);
+
+CREATE TABLE `user`(
+    `user_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `email` VARCHAR(255),
+    `username` VARCHAR(255)
+);
+
+CREATE TABLE `contribution`(
+    `contribution_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `drink_id` INT,
+    `user_id` INT,
+    `date_created` DATE,
+    `accepted` BOOLEAN DEFAULT false,
+
+    FOREIGN KEY (drink_id) REFERENCES `drink`(drink_id),
+    FOREIGN KEY (user_id) REFERENCES `user`(user_id)
 );
