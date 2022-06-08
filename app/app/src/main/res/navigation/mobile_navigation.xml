@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_nav_home_to_einstellungenFragment"
             app:destination="@id/einstellungenFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_bierInfoFragment"
+            app:destination="@id/bierInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/suchenFragment"
@@ -51,5 +54,10 @@
         android:name="de.oliver.bierdb.ui.einstellungen.EinstellungenFragment"
         android:label="Einstellungen"
         tools:layout="@layout/fragment_einstellungen" />
+    <fragment
+        android:id="@+id/bierInfoFragment"
+        android:name="de.oliver.bierdb.ui.bierInfo.BierInfoFragment"
+        android:label="Bier Informationen"
+        tools:layout="@layout/fragment_bier_info" />
 
 </navigation>

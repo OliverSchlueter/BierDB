@@ -1,9 +1,17 @@
 package de.oliver.bierdb;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 
@@ -15,6 +23,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 
 import androidx.annotation.NonNull;
+import androidx.core.content.FileProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -22,6 +31,11 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import de.oliver.bierdb.databinding.ActivityMainBinding;
 import de.oliver.bierdb.entities.Drink;
@@ -51,7 +65,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Diese Funktion ist noch in der Entwicklung", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                        .setAction("Action", null)
+                        .show();
+
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                try {
+                    startActivityForResult(takePictureIntent, 1);
+                } catch (ActivityNotFoundException e) {
+                    // display error state to the user
+                }
+
             }
         });
         DrawerLayout drawer = binding.drawerLayout;
@@ -138,11 +161,31 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Camera
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // requestCode 1 = Camera code
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+            navController.navigate(R.id.suchenFragment);
+            Snackbar.make(navigationView, "Bild wird verarbeitet...", Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+
     public static MainActivity getInstance() {
         return instance;
     }
 
     public static FirebaseFirestore getDatabase() {
         return database;
+    }
+
+    public NavController getNavController() {
+        return navController;
     }
 }

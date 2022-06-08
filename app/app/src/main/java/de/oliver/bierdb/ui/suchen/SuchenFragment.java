@@ -1,22 +1,16 @@
 package de.oliver.bierdb.ui.suchen;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.ColorMatrixColorFilter;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,12 +31,15 @@ import java.util.Set;
 import de.oliver.bierdb.MainActivity;
 import de.oliver.bierdb.R;
 import de.oliver.bierdb.entities.Drink;
+import de.oliver.bierdb.ui.bierInfo.BierInfoFragment;
 
 public class SuchenFragment extends Fragment {
 
     private SearchView search_bier;
     private LinearLayout list_bier_suggestion;
     private TextView txt_amount_suggestions;
+
+    public static Drink clickedDrink;
 
     public static SuchenFragment newInstance() {
         return new SuchenFragment();
@@ -171,6 +167,8 @@ public class SuchenFragment extends Fragment {
         linearLayout.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
         linearLayout.setOnClickListener(v -> {
             Toast.makeText(MainActivity.getInstance(), "Click on: " + drink.getName() + "(" + drink.getId() + ")", Toast.LENGTH_SHORT).show();
+            clickedDrink = drink;
+            MainActivity.getInstance().getNavController().navigate(R.id.bierInfoFragment);
         });
 
         ImageView icon = new ImageView(MainActivity.getInstance());
