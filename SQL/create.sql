@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS `drink`;
 DROP TABLE IF EXISTS `type`;
 DROP TABLE IF EXISTS `contribution`;
 DROP TABLE IF EXISTS `user`;
+DROP VIEW IF EXISTS `available_drinks`;
 
 CREATE TABLE `type`(
     `type_id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -37,3 +38,9 @@ CREATE TABLE `contribution`(
     FOREIGN KEY (drink_id) REFERENCES `drink`(drink_id),
     FOREIGN KEY (user_id) REFERENCES `user`(user_id)
 );
+
+CREATE VIEW `available_drinks` AS
+    SELECT `drink`.* FROM `contribution`
+    RIGHT JOIN `drink` ON `contribution`.drink_id = `drink`.drink_id
+    WHERE accepted IS NULL
+    OR accepted = true;
