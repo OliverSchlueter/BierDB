@@ -1,5 +1,6 @@
 package de.oliver.bierdb.ui.einstellungen;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,8 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import de.oliver.bierdb.BuildConfig;
 import de.oliver.bierdb.MainActivity;
 import de.oliver.bierdb.R;
 import de.oliver.bierdb.entities.Drink;
@@ -24,6 +27,7 @@ public class EinstellungenFragment extends Fragment {
 
     private Button btn_delete_search_history;
     private Button btn_delete_cache;
+    private TextView txt_version;
 
     public static EinstellungenFragment newInstance() {
         return new EinstellungenFragment();
@@ -34,12 +38,16 @@ public class EinstellungenFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_einstellungen, container, false);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         btn_delete_search_history = view.findViewById(R.id.btn_delete_search_history);
         btn_delete_cache = view.findViewById(R.id.btn_delete_cache);
+        txt_version = view.findViewById(R.id.txt_version);
+
+        txt_version.setText("Version: " + BuildConfig.VERSION_NAME);
 
         btn_delete_search_history.setOnClickListener(v -> {
 
