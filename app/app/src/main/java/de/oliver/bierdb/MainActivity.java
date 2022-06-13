@@ -122,13 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO: remove when database gets big
         // Temporally fetching all items to cache
-        database.collection("drinks").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                Drink.parse(task);
-            }
-        });
-
+        Drink.addAllDrinksToCache();
     }
 
 

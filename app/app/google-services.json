@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "812068039313",
+    "project_id": "bierdb-97e0b",
+    "storage_bucket": "bierdb-97e0b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812068039313:android:ca14425a6474ee8f7ead30",
+        "android_client_info": {
+          "package_name": "de.oliver.bierdb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "812068039313-s6lmmqclah5j6ncrnrpac6emdjt3t0es.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvNNE_ouhUGO6KvBGZniD9L1IbmlAoCDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "812068039313-s6lmmqclah5j6ncrnrpac6emdjt3t0es.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

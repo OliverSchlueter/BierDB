@@ -1,5 +1,8 @@
 package de.oliver.bierdb.entities;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -130,5 +133,9 @@ public class Drink {
         }
 
         return drinks;
+    }
+
+    public static void addAllDrinksToCache(){
+        MainActivity.getDatabase().collection("drinks").get().addOnCompleteListener(Drink::parse);
     }
 }
