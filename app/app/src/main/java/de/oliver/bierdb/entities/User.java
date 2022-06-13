@@ -99,7 +99,6 @@ public class User {
 
         for (String s : sharedPreferences.getStringSet("currentUser_favoriteDrinks", new HashSet<>())) {
             favoriteDrinks.add(Integer.parseInt(s));
-            Toast.makeText(MainActivity.getInstance(), "fav: " + s, Toast.LENGTH_SHORT).show();
         }
         
         setCurrentUser(new User(

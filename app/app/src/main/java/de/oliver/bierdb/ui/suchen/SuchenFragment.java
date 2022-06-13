@@ -182,7 +182,7 @@ public class SuchenFragment extends Fragment {
         space.setLayoutParams(new ViewGroup.LayoutParams(20, 1));
 
         TextView name = new TextView(MainActivity.getInstance());
-        name.setText((User.getCurrentUser().getFavoriteDrinks().contains(drink.getId()) ? " ♥" : "") + drink.getName() + " (" + drink.getType().getName() + ")");
+        name.setText((User.getCurrentUser().getFavoriteDrinks().contains(drink.getId()) ? "♥ " : "") + drink.getName() + " (" + drink.getType().getName() + ")");
         name.setTextSize(18);
 
         DecimalFormat decimalFormat = new DecimalFormat("###.##");

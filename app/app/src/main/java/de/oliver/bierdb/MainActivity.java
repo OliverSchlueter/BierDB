@@ -69,12 +69,13 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null)
                         .show();
 
+                /* TODO: uncomment - will open camera
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 try {
                     startActivityForResult(takePictureIntent, 1);
                 } catch (ActivityNotFoundException e) {
                     // display error state to the user
-                }
+                }*/
 
             }
         });
