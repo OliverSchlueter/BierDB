@@ -31,6 +31,7 @@ import java.util.Set;
 import de.oliver.bierdb.MainActivity;
 import de.oliver.bierdb.R;
 import de.oliver.bierdb.entities.Drink;
+import de.oliver.bierdb.entities.User;
 import de.oliver.bierdb.ui.bierInfo.BierInfoFragment;
 
 public class SuchenFragment extends Fragment {
@@ -161,12 +162,13 @@ public class SuchenFragment extends Fragment {
         });
     }
 
+    @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
     private void generateViewFromDrink(Drink drink){
         LinearLayout linearLayout = new LinearLayout(MainActivity.getInstance());
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
         linearLayout.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
         linearLayout.setOnClickListener(v -> {
-            Toast.makeText(MainActivity.getInstance(), "Click on: " + drink.getName() + "(" + drink.getId() + ")", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(MainActivity.getInstance(), "Click on: " + drink.getName() + "(" + drink.getId() + ")", Toast.LENGTH_SHORT).show();
             clickedDrink = drink;
             MainActivity.getInstance().getNavController().navigate(R.id.bierInfoFragment);
         });
@@ -180,7 +182,7 @@ public class SuchenFragment extends Fragment {
         space.setLayoutParams(new ViewGroup.LayoutParams(20, 1));
 
         TextView name = new TextView(MainActivity.getInstance());
-        name.setText(drink.getName() + " (" + drink.getType().getName() + ")");
+        name.setText((User.getCurrentUser().getFavoriteDrinks().contains(drink.getId()) ? " ♥" : "") + drink.getName() + " (" + drink.getType().getName() + ")");
         name.setTextSize(18);
 
         DecimalFormat decimalFormat = new DecimalFormat("###.##");

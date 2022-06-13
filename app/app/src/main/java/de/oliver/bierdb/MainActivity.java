@@ -39,6 +39,7 @@ import java.util.Date;
 
 import de.oliver.bierdb.databinding.ActivityMainBinding;
 import de.oliver.bierdb.entities.Drink;
+import de.oliver.bierdb.entities.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -119,6 +120,8 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        User.loadCurrentUser();
 
         // TODO: remove when database gets big
         // Temporally fetching all items to cache

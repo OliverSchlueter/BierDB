@@ -13,9 +13,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import de.oliver.bierdb.MainActivity;
 import de.oliver.bierdb.R;
 import de.oliver.bierdb.entities.Drink;
+import de.oliver.bierdb.entities.User;
 import de.oliver.bierdb.ui.suchen.SuchenFragment;
 
 public class BierInfoFragment extends Fragment {
@@ -26,7 +29,6 @@ public class BierInfoFragment extends Fragment {
     private TextView txt_bier_info_vol;
     private TextView txt_bier_info_size;
     private ImageButton btn_add_fav;
-    private boolean fav;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,13 +48,17 @@ public class BierInfoFragment extends Fragment {
         btn_add_fav = view.findViewById(R.id.btn_add_fav);
 
         btn_add_fav.setOnClickListener(v -> {
-            if (fav) {
+            if (User.getCurrentUser().getFavoriteDrinks().contains(SuchenFragment.clickedDrink.getId())) {
                 btn_add_fav.setColorFilter(null);
+                User.getCurrentUser().getFavoriteDrinks().remove(User.getCurrentUser().getFavoriteDrinks().indexOf(SuchenFragment.clickedDrink.getId()));
+                Toast.makeText(MainActivity.getInstance(), SuchenFragment.clickedDrink.getName() + " von Favoriten entfernt", Toast.LENGTH_SHORT).show();
             } else {
                 btn_add_fav.setColorFilter(getResources().getColor(R.color.red_700));
+                User.getCurrentUser().getFavoriteDrinks().add(SuchenFragment.clickedDrink.getId());
+                Toast.makeText(MainActivity.getInstance(), SuchenFragment.clickedDrink.getName() + " zu Favoriten hinzugefügt", Toast.LENGTH_SHORT).show();
             }
-            fav = !fav;
-            // TODO: add to fav
+
+            User.saveCurrentUser(false);
         });
 
         update(SuchenFragment.clickedDrink);
@@ -65,6 +71,9 @@ public class BierInfoFragment extends Fragment {
         txt_bier_info_vol.setText(drink.getVolumePercentage() + " % vol.");
         txt_bier_info_size.setText(drink.getSizeLiter() + " l");
 
-        fav = false; // TODO: hard coded
+        if (User.getCurrentUser().getFavoriteDrinks().contains(SuchenFragment.clickedDrink.getId())) {
+            btn_add_fav.setColorFilter(getResources().getColor(R.color.red_700));
+        }
+
     }
 }

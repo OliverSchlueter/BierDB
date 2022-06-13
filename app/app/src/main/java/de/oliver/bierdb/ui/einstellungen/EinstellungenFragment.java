@@ -21,12 +21,14 @@ import de.oliver.bierdb.BuildConfig;
 import de.oliver.bierdb.MainActivity;
 import de.oliver.bierdb.R;
 import de.oliver.bierdb.entities.Drink;
+import de.oliver.bierdb.entities.User;
 
 
 public class EinstellungenFragment extends Fragment {
 
     private Button btn_delete_search_history;
     private Button btn_delete_cache;
+    private Button btn_remove_all_fav;
     private TextView txt_version;
 
     public static EinstellungenFragment newInstance() {
@@ -45,6 +47,7 @@ public class EinstellungenFragment extends Fragment {
 
         btn_delete_search_history = view.findViewById(R.id.btn_delete_search_history);
         btn_delete_cache = view.findViewById(R.id.btn_delete_cache);
+        btn_remove_all_fav = view.findViewById(R.id.btn_remove_all_fav);
         txt_version = view.findViewById(R.id.txt_version);
 
         txt_version.setText("Version: " + BuildConfig.VERSION_NAME);
@@ -56,7 +59,8 @@ public class EinstellungenFragment extends Fragment {
             builder.setTitle("Suchverlauf löschen");
 
             builder.setPositiveButton("JA", (dialog, which) -> {
-                deleteSearchHistory();
+                SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+                sharedPreferences.edit().remove("searchHistory").apply();
                 Toast.makeText(MainActivity.getInstance(), "Erfolgreich den Suchverlauf gelöscht", Toast.LENGTH_SHORT).show();
             });
 
@@ -70,11 +74,10 @@ public class EinstellungenFragment extends Fragment {
 
         btn_delete_cache.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.getInstance());
-            builder.setMessage("Wollen Sie wirklich den Cache (inkl. Suchverlauf) löschen?\nDies läd die Daten der Biere neu");
+            builder.setMessage("Wollen Sie wirklich den Cache löschen?\nDies läd die Daten der Biere neu");
             builder.setTitle("Cache löschen");
 
             builder.setPositiveButton("JA", (dialog, which) -> {
-                deleteSearchHistory();
                 Drink.getDrinkCache().clear();
                 Drink.addAllDrinksToCache(); //TODO: remove when database gets large (or in production)
                 Toast.makeText(MainActivity.getInstance(), "Erfolgreich den Cache gelöscht", Toast.LENGTH_SHORT).show();
@@ -88,10 +91,25 @@ public class EinstellungenFragment extends Fragment {
             AlertDialog dialog = builder.create();
             dialog.show();
         });
-    }
 
-    private void deleteSearchHistory(){
-        SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
-        sharedPreferences.edit().remove("searchHistory").apply();
+        btn_remove_all_fav.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.getInstance());
+            builder.setMessage("Wollen Sie wirklich alle Bier-Favoriten löschen?");
+            builder.setTitle("Favoriten löschen");
+
+            builder.setPositiveButton("JA", (dialog, which) -> {
+                User.getCurrentUser().getFavoriteDrinks().clear();
+                User.saveCurrentUser(false);
+                Toast.makeText(MainActivity.getInstance(), "Erfolgreich alle Bier-Favoriten gelöscht", Toast.LENGTH_SHORT).show();
+            });
+
+            builder.setNegativeButton("NEIN", (dialog, which) -> {
+                Toast.makeText(MainActivity.getInstance(), "Bier-Favoriten NICHT gelöscht", Toast.LENGTH_SHORT).show();
+            });
+
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        });
     }
 }
