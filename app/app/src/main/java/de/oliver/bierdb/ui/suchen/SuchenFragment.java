@@ -97,7 +97,7 @@ public class SuchenFragment extends Fragment {
                 }
 
                 if(suggestedDrinks.size() == 0){
-                    txt_amount_suggestions.setText("KEINE TREFFER GEFUNDE");
+                    txt_amount_suggestions.setText("KEINE TREFFER GEFUNDEN");
                 } else {
                     txt_amount_suggestions.setText(suggestedDrinks.size() + " BIER" + (suggestedDrinks.size() > 1 ? "E" : "") + " GEFUNDEN");
                 }

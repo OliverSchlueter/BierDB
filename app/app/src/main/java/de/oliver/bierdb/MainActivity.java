@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         User.loadCurrentUser();
+        User.saveCurrentUser(false);
 
         // TODO: remove when database gets big
         // Temporally fetching all items to cache
